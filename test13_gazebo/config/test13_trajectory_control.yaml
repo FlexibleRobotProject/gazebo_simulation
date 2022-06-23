@@ -1,0 +1,41 @@
+test13:
+  arm_joint_controller:
+    type: "position_controllers/JointTrajectoryController"
+    joints:
+      - c1_box
+      - a1_c1
+      - c2_a1
+      - a2_c2
+      - c3_a2
+      - a3_c3
+      - c4_a3
+      - a4_c4
+      - c5_a4
+      - a5_c5
+      - c6_a5
+      - a6_c6
+      - c7_a6
+      - a7_c7
+      - c8_a7
+      - a8_c8
+
+  gazebo_ros_control:
+  # 改成pid_gains，可解决报错，但无法规划。。。
+  # 这个param应该是用占位符导入失败，改用系统自带的控制器控制成功的
+    gains:
+      c1_box:   {p: 100, i: 0.01, d: 0.0}
+      a1_c1:   {p: 100, i: 0.01, d: 0.0}
+      c2_a1:   {p: 100, i: 0.01, d: 0.0}
+      a2_c2:   {p: 100, i: 0.01, d: 0.0}
+      c3_a2:   {p: 100, i: 0.01, d: 0.0}
+      a3_c3:   {p: 100, i: 0.01, d: 0.0}
+      c4_a3:   {p: 100, i: 0.01, d: 0.0}
+      a4_c4:   {p: 100, i: 0.01, d: 0.0}
+      c5_a4:   {p: 100, i: 0.01, d: 0.0}
+      a5_c5:   {p: 100, i: 0.01, d: 0.0}
+      c6_a5:   {p: 100, i: 0.01, d: 0.0}
+      a6_c6:   {p: 100, i: 0.01, d: 0.0}
+      c7_a6:   {p: 100, i: 0.01, d: 0.0}
+      a7_c7:   {p: 100, i: 0.01, d: 0.0}
+      c8_a7:   {p: 100, i: 0.01, d: 0.0}
+      a8_c8:   {p: 100, i: 0.01, d: 0.0}   

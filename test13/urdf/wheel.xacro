@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="wheel">
+
+    <xacro:macro name="wheel" params="wheel_prefix  *joint_pose  ">
+
+        <link name="${wheel_prefix}">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.770519228032627" />
+                <inertia ixx="0.00510838435518344" ixy="1.0794878688027E-06" ixz="9.2002514461803E-08" iyy="0.00277780807828622" iyz="-1.93742229505315E-07" izz="0.00277499430505989" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${wheel_prefix}.STL" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${wheel_prefix}.STL" />
+                </geometry>
+            </collision>
+        </link>
+
+
+
+        <joint name="${wheel_prefix}_jt" type="fixed">
+            <parent link="car"/>
+            <child link="${wheel_prefix}"/>
+            <xacro:insert_block name="joint_pose"/>
+            <axis xyz="-1 0 0" />
+        </joint>
+
+        <!--/ 添加，待测试轮固定状态的移动是否正常-->
+        <gazebo reference="${wheel_prefix}">
+            <mu1 value="10000000000.0"/>
+            <mu2 value="10000000000.0"/>
+            <kp value="10000000.0" />
+            <kd value="1.0" />
+        </gazebo>
+
+
+    </xacro:macro>
+
+</robot>

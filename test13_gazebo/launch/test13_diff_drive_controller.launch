@@ -1,0 +1,8 @@
+<launch>
+
+    <rosparam file="$(find test13_gazebo)/config/test13_diff_drive_control.yaml" command="load"/>
+
+    <node name="car_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/test13" args="diff_drive_controller"/>
+    
+</launch>

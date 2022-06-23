@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+
+<robot name="test13" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <xacro:include filename="$(find test13)/urdf/wheel.xacro" />
+    <xacro:include filename="$(find test13)/urdf/arm.xacro" />
+
+
+    <link name="car">
+        <inertial>
+            <origin xyz="-0.0673870774302971 -0.0242974902898467 0.037605344796407" rpy="0 0 0" />
+            <mass value="14.5256283049751" />
+            <inertia ixx="0.0319475230840613" ixy="-5.99270677355943E-06" ixz="-6.7996254265837E-07" iyy="0.0940613453311338" iyz="8.24946159357757E-06" izz="0.117849170718328" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://test13/meshes/car.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://test13/meshes/car.STL" />
+            </geometry>
+        </collision>
+    </link>
+    
+    <link name="box">
+        <inertial>
+            <origin xyz="-0.027763200324664 -0.103396362894055 0.346619006800381" rpy="0 0 0" />
+            <mass value="49.734495715467" />
+            <inertia ixx="0.701226523820514" ixy="-5.83172393889355E-06" ixz="5.90807391252156E-06" iyy="0.209200435951837" iyz="6.83550774041468E-05" izz="0.898201924919066" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://test13/meshes/box.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://test13/meshes/box.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="box_car" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="car" />
+        <child link="box" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+
+    <link name="base_footprint">
+        <visual>
+            <geometry>
+                <sphere radius="0.05" />
+            </geometry>
+        </visual>
+    </link>
+    <joint name="car2base_footprint" type="fixed">
+        <parent link="base_footprint" />
+        <child link="car" />
+        <origin xyz="0 0 0.13" />
+    </joint>
+
+    <xacro:wheel wheel_prefix="wheel1">
+        <origin xyz="-0.34724 0.19908 -0.037046" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <xacro:wheel wheel_prefix="wheel2">
+        <origin xyz="0.34692 0.19912 -0.037248" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <xacro:wheel wheel_prefix="wheel3">
+        <origin xyz="0.34692 -0.33187 -0.037246" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <xacro:wheel wheel_prefix="wheel4">
+        <origin xyz="-0.347237875775832 -0.333914799360913 -0.0370461138896161" rpy="0 0 0" />
+    </xacro:wheel>
+
+
+    <xacro:arm_cardan link_name="c1">
+        <inertial>
+            <origin xyz="-0.000624560089181214 -2.15023061023167E-08 0.000624633346736478" rpy="0 0 0" />
+            <mass value="0.00085562373886139" />
+            <inertia ixx="1.95100415222525E-08" ixy="2.06355867465096E-10" ixz="-3.33504859590232E-10" iyy="3.40019507512258E-08" iyz="2.07399623769587E-10" izz="1.95114052085228E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c2">
+        <inertial>
+            <origin xyz="0.000624560089181214 -2.15023061578279E-08 -0.000624633346736416" rpy="0 0 0" />
+            <mass value="0.000855623738861524" />
+            <inertia ixx="1.95100415222578E-08" ixy="-2.06355867465199E-10" ixz="-3.33504859590846E-10" iyy="3.40019507512312E-08" iyz="-2.07399623769218E-10" izz="1.9511405208523E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c3">
+        <inertial>
+            <origin xyz="-0.000624560089180992 -2.1502306213339E-08 0.000624633346736706" rpy="0 0 0" />
+            <mass value="0.000855623738861506" />
+            <inertia ixx="1.95100415222596E-08" ixy="2.06355867465168E-10" ixz="-3.33504859590311E-10" iyy="3.40019507512318E-08" iyz="2.07399623769573E-10" izz="1.95114052085223E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c4">
+        <inertial>
+            <origin xyz="0.000624560089180548 -2.15023061578279E-08 -0.000624633346737132" rpy="0 0 0" />
+            <mass value="0.000855623738861523" />
+            <inertia ixx="1.95100415222638E-08" ixy="-2.06355867465131E-10" ixz="-3.33504859590261E-10" iyy="3.40019507512345E-08" iyz="-2.07399623769784E-10" izz="1.95114052085204E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c5">
+        <inertial>
+            <origin xyz="-0.000624560089181214 -2.15023061578279E-08 0.000624633346736528" rpy="0 0 0" />
+            <mass value="0.000855623738861448" />
+            <inertia ixx="1.95100415222568E-08" ixy="2.06355867465381E-10" ixz="-3.33504859590222E-10" iyy="3.40019507512305E-08" iyz="2.0739962376974E-10" izz="1.9511405208523E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c6">
+        <inertial>
+            <origin xyz="0.000624560089180992 -2.15023059357833E-08 -0.000624633346736459" rpy="0 0 0" />
+            <mass value="0.0008556237388615" />
+            <inertia ixx="1.95100415222618E-08" ixy="-2.06355867465122E-10" ixz="-3.33504859590232E-10" iyy="3.40019507512308E-08" iyz="-2.0739962376976E-10" izz="1.95114052085189E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c7">
+        <inertial>
+            <origin xyz="-0.000624560089181214 -2.15023061578279E-08 0.000624633346736453" rpy="0 0 0" />
+            <mass value="0.000855623738861426" />
+            <inertia ixx="1.95100415222538E-08" ixy="2.06355867465352E-10" ixz="-3.3350485958953E-10" iyy="3.40019507512255E-08" iyz="2.07399623769308E-10" izz="1.95114052085215E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+    <xacro:arm_cardan link_name="c8">
+        <inertial>
+            <origin xyz="0.00062456 -2.1502E-08 -0.00062463" rpy="0 0 0" />
+            <mass value="0.00085562" />
+            <inertia ixx="1.951E-08" ixy="-2.0636E-10" ixz="-3.335E-10" iyy="3.4002E-08" iyz="-2.074E-10" izz="1.9511E-08" />
+        </inertial>
+    </xacro:arm_cardan>
+
+
+    <xacro:arm_link link_name="a1">
+        <inertial>
+            <origin xyz="4.44013035163504E-05 0.0830004420832058 4.4381499114763E-05" rpy="0 0 0" />
+            <mass value="0.0513268865106839" />
+            <inertia ixx="0.000163094060177746" ixy="1.75392835719044E-07" ixz="5.84540188172067E-10" iyy="1.15707039986553E-05" iyz="-1.75324725750356E-07" izz="0.000163094047021556" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a2">
+        <inertial>
+            <origin xyz="-4.44041132612316E-05 0.0830004570790858 -4.43824699447332E-05" rpy="0 0 0" />
+            <mass value="0.0513268879183339" />
+            <inertia ixx="0.000163094078754045" ixy="-1.75400324227372E-07" ixz="5.84674596873499E-10" iyy="1.15707039762251E-05" iyz="1.75326322219116E-07" izz="0.000163094064771429" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a3">
+        <inertial>
+            <origin xyz="4.44013035163504E-05 0.0830004420832058 4.4381499114763E-05" rpy="0 0 0" />
+            <mass value="0.0513268865106839" />
+            <inertia ixx="0.000163094060177746" ixy="1.75392835719044E-07" ixz="5.84540188172067E-10" iyy="1.15707039986553E-05" iyz="-1.75324725750356E-07" izz="0.000163094047021556" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a4">
+        <inertial>
+            <origin xyz="-4.44041132612316E-05 0.0830004570790858 -4.43824699447332E-05" rpy="0 0 0" />
+            <mass value="0.0513268879183339" />
+            <inertia ixx="0.000163094078754045" ixy="-1.75400324227372E-07" ixz="5.84674596873499E-10" iyy="1.15707039762251E-05" iyz="1.75326322219116E-07" izz="0.000163094064771429" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a5">
+        <inertial>
+            <origin xyz="4.44013035163504E-05 0.0830004420832058 4.4381499114763E-05" rpy="0 0 0" />
+            <mass value="0.0513268865106839" />
+            <inertia ixx="0.000163094060177746" ixy="1.75392835719044E-07" ixz="5.84540188172067E-10" iyy="1.15707039986553E-05" iyz="-1.75324725750356E-07" izz="0.000163094047021556" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a6">
+        <inertial>
+            <origin xyz="-4.44041132612316E-05 0.0830004570790858 -4.43824699447332E-05" rpy="0 0 0" />
+            <mass value="0.0513268879183339" />
+            <inertia ixx="0.000163094078754045" ixy="-1.75400324227372E-07" ixz="5.84674596873499E-10" iyy="1.15707039762251E-05" iyz="1.75326322219116E-07" izz="0.000163094064771429" />
+        </inertial>
+    </xacro:arm_link>
+
+
+    <xacro:arm_link link_name="a7">
+        <inertial>
+            <origin xyz="4.44013035163504E-05 0.0830004420832058 4.4381499114763E-05" rpy="0 0 0" />
+            <mass value="0.0513268865106839" />
+            <inertia ixx="0.000163094060177746" ixy="1.75392835719044E-07" ixz="5.84540188172067E-10" iyy="1.15707039986553E-05" iyz="-1.75324725750356E-07" izz="0.000163094047021556" />
+        </inertial>
+    </xacro:arm_link>
+
+    <xacro:arm_link link_name="a8">
+        <inertial>
+            <origin xyz="2.55811788785199E-05 0.0984342908350679 4.45566170436994E-05" rpy="0 0 0" />
+            <mass value="0.0604566169315699" />
+            <inertia ixx="0.000240417189402844" ixy="1.36789617572798E-07" ixz="8.15910304770246E-10" iyy="1.36904696186755E-05" iyz="-1.90257648129972E-07" izz="0.000240534489469948" />
+        </inertial>
+    </xacro:arm_link>
+
+
+    <xacro:arm_joint joint_name="c1_box" parent="box" child="c1" joint_axis_xyz="0 0 1" joint_origin_xyz="0.0054195 0.38199 0.62999" />
+    <xacro:arm_joint joint_name="a1_c1" parent="c1" child="a1" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c2_a1" parent="a1" child="c2" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a2_c2" parent="c2" child="a2" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c3_a2" parent="a2" child="c3" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a3_c3" parent="c3" child="a3" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c4_a3" parent="a3" child="c4" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a4_c4" parent="c4" child="a4" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c5_a4" parent="a4" child="c5" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a5_c5" parent="c5" child="a5" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c6_a5" parent="a5" child="c6" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a6_c6" parent="c6" child="a6" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c7_a6" parent="a6" child="c7" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a7_c7" parent="c7" child="a7" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+    <xacro:arm_joint joint_name="c8_a7" parent="a7" child="c8" joint_axis_xyz="0 0 1" joint_origin_xyz="0 0.166 0" />
+    <xacro:arm_joint joint_name="a8_c8" parent="c8" child="a8" joint_axis_xyz="-1 0 0" joint_origin_xyz="0 0 0" />
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/test13</robotNamespace>
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+            <legacyModeNS>true</legacyModeNS>
+        </plugin>
+    </gazebo>
+
+</robot>

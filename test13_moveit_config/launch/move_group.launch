@@ -1,0 +1,65 @@
+<launch>
+
+  <!-- debug配置 -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix"
+	   value="gdb -x $(find test13_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
+  <arg name="info" default="$(arg debug)" />
+  <arg unless="$(arg info)" name="command_args" value="" />
+  <arg     if="$(arg info)" name="command_args" value="--debug" />
+
+
+  <!-- move_group 参数 -->
+  <arg name="planner" default="ompl" />
+  <arg name="allow_trajectory_execution" default="true"/>
+  <arg name="fake_execution" default="false"/>
+  <arg name="max_safe_path_cost" default="1"/>
+  <arg name="jiggle_fraction" default="0.05" />
+  <arg name="publish_monitored_planning_scene" default="true"/>
+  <arg name="capabilities" default=""/>
+  <arg name="disable_capabilities" default=""/>
+
+
+  <!-- 载入 URDF, SRDF ，joint_limits 配置 -->
+  <include file="$(find test13_moveit_config)/launch/planning_context.launch" />
+
+
+
+  <!-- 载入运动规划管道， OMPL launch xml配置参数 -->
+  <include ns="move_group" file="$(find test13_moveit_config)/launch/planning_pipeline.launch.xml">
+    <arg name="pipeline" value="$(arg planner)" />
+  </include>
+
+  <!-- 轨迹执行功能 -->
+  <include ns="move_group" file="$(find test13_moveit_config)/launch/trajectory_execution.launch.xml" if="$(arg allow_trajectory_execution)">
+    <arg name="moveit_manage_controllers" value="true" />
+    <arg name="moveit_controller_manager" value="test13" unless="$(arg fake_execution)"/>
+    <arg name="moveit_controller_manager" value="fake" if="$(arg fake_execution)"/>
+  </include>
+
+  <!-- 传感功能 -->
+  <include ns="move_group" file="$(find test13_moveit_config)/launch/sensor_manager.launch.xml" if="$(arg allow_trajectory_execution)">
+    <arg name="moveit_sensor_manager" value="test13" />
+  </include>
+
+  <!-- 启动move_group节点和action服务器端 -->
+  <node name="move_group" launch-prefix="$(arg launch_prefix)" pkg="moveit_ros_move_group" type="move_group" respawn="false" output="screen" args="$(arg command_args)">
+    <!-- Set the display variable, in case OpenGL code is used internally -->
+    <env name="DISPLAY" value="$(optenv DISPLAY :0)" />
+
+    <param name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
+    <param name="max_safe_path_cost" value="$(arg max_safe_path_cost)"/>
+    <param name="jiggle_fraction" value="$(arg jiggle_fraction)" />
+    <param name="capabilities" value="$(arg capabilities)"/>
+    <param name="disable_capabilities" value="$(arg disable_capabilities)"/>
+
+
+    <!-- Publish the planning scene of the physical robot so that rviz plugin can know actual robot -->
+    <param name="planning_scene_monitor/publish_planning_scene" value="$(arg publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_geometry_updates" value="$(arg publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_state_updates" value="$(arg publish_monitored_planning_scene)" />
+    <param name="planning_scene_monitor/publish_transforms_updates" value="$(arg publish_monitored_planning_scene)" />
+  </node>
+
+</launch>

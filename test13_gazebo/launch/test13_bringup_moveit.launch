@@ -1,0 +1,18 @@
+<launch>
+  
+    <!-- gazebo环境初始化，模型导入（HW+GAZEBO）  -->
+    <include file="$(find test13_gazebo)/launch/test13_gazebo_world.launch" />
+
+    <!-- JointStateController控制器挂载，tf广播 -->
+    <include file="$(find test13_gazebo)/launch/test13_gazebo_states.launch" />   
+
+    <!-- JointTrajectoryController控制器挂载 -->
+    <include file="$(find test13_gazebo)/launch/test13_trajectory_controller.launch" />
+
+    <!-- ros_control diff diver control launch file -->
+    <!--include file="$(find test13_gazebo)/launch/test13_diff_drive_controller.launch" /-->
+
+    <!-- moveit端启动，和ros_control之间action服务端建立 -->
+    <include file="$(find test13_moveit_config)/launch/moveit_planning_execution.launch" />
+
+</launch>

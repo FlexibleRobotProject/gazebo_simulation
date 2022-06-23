@@ -1,0 +1,21 @@
+<launch>
+
+  <!--开rviz-->
+ <include file="$(find test13_moveit_config)/launch/moveit_rviz.launch">
+  <arg name="config" value="true" />
+ </include>
+
+  <!-- 开joint_state_publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/> 
+    <rosparam param="/source_list">[/test13/joint_states]</rosparam>
+  </node>
+
+  <!-- 启动核心move group节点 -->
+ <include file="$(find test13_moveit_config)/launch/move_group.launch">
+  <arg name="publish_monitored_planning_scene" value="true" />
+ </include>
+
+
+
+</launch>

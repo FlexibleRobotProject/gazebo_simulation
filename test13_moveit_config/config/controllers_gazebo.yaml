@@ -1,0 +1,24 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: test13/arm_joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+    joints:
+      - c1_box
+      - a1_c1
+      - c2_a1
+      - a2_c2
+      - c3_a2
+      - a3_c3
+      - c4_a3
+      - a4_c4
+      - c5_a4
+      - a5_c5
+      - c6_a5
+      - a6_c6
+      - c7_a6
+      - a7_c7
+      - c8_a7
+      - a8_c8

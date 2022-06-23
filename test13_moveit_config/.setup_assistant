@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: test13
+    relative_path: urdf/test13.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/test13.srdf
+  CONFIG:
+    author_name: sjtu
+    author_email: shuixieliushangqu_i@sjtu.edu.cn
+    generated_timestamp: 1648702982

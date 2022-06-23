@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arm">
+
+
+    <xacro:macro name="arm_cardan" params="link_name *inertial_c_part">
+        <link name="${link_name}">
+
+            <xacro:insert_block name="inertial_c_part"/>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${link_name}.STL" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${link_name}.STL" />
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+
+    <xacro:macro name="arm_link" params="link_name *inertial_a_part">
+        <link name="${link_name}">
+
+            <xacro:insert_block name="inertial_a_part"/>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${link_name}.STL" />
+                </geometry>
+                <material name="">
+                    <color rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://test13/meshes/${link_name}.STL" />
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+
+    <xacro:macro name="arm_joint" params=" joint_name parent child  joint_origin_xyz   joint_axis_xyz">
+        <joint name="${joint_name}" type="revolute">
+            <origin xyz="${joint_origin_xyz}" rpy="0 0 0"/>
+            <parent link="${parent}"/>
+            <child link="${child}"/>
+            <axis xyz="${joint_axis_xyz}"/>
+            <limit effort="100" velocity="3" lower="-0.35" upper="0.35" />
+
+        </joint>
+
+        <transmission name="${joint_name}_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${joint_name}_actuator">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+        <!--For torque sensing in simulation-->
+        <!--gazebo reference="${joint_name}">
+            <provideFeedback>true</provideFeedback>
+        </gazebo>
+        <gazebo>
+            <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
+                <updateRate>30.0</updateRate>
+                <topicName>${joint_name}_ft_sensor_topic</topicName>
+                <jointName>${joint_name}</jointName>
+            </plugin>
+        </gazebo-->
+
+    </xacro:macro>
+
+</robot>

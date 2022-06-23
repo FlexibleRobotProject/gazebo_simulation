@@ -1,0 +1,15 @@
+<launch>
+    <!-- Load the configuration parameters of the joint controller into the parameter server  -->
+    <rosparam file="$(find test13_gazebo)/config/test13_gazebo_joint_states.yaml" command="load"/>
+
+    <node name="joint_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/test13" args="joint_state_controller" />
+
+    <!-- 运行robot_state_publisher and publish tf  -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+        <remap from="/joint_states" to="/test13/joint_states" />
+    </node>
+
+</launch>
+

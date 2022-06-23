@@ -1,0 +1,28 @@
+ <!-- 载入 URDF, SRDF ，joint_limits 配置 -->
+<launch>
+
+  <!-- 废话文学 -->
+  <arg name="robot_description" default="robot_description"/>
+
+
+  <!-- 此处由move_group配置，表示允许载入robot_description -->
+  <arg name="load_robot_description" default="false"/>
+
+
+  <!-- 读取xacro -->
+  <param if="$(arg load_robot_description)" name="$(arg robot_description)" command="xacro '$(find test13)/urdf/all.xacro'"/>
+  <!-- 读取srdf -->
+  <param name="$(arg robot_description)_semantic" textfile="$(find test13_moveit_config)/config/test13.srdf" />
+
+  <!-- 读取joint limits (覆盖xacro部分)
+       ns: robot_description_planning -->
+  <group ns="$(arg robot_description)_planning">
+    <rosparam command="load" file="$(find test13_moveit_config)/config/joint_limits.yaml"/>
+  </group>
+
+  <!-- 读取求解器配置，貌似会被覆盖-->
+  <group ns="$(arg robot_description)_kinematics">
+    <rosparam command="load" file="$(find test13_moveit_config)/config/kinematics.yaml"/>
+  </group>
+
+</launch>
