@@ -1,7 +1,7 @@
 <launch>
   
-    <!-- gazebo环境初始化，模型导入（HW+GAZEBO）  -->
-    <include file="$(find test13_gazebo)/launch/test13_gazebo_world.launch" />
+    <!-- gazebo环境初始化，模型导入（HW+GAZEBO）,先挂一个empty  -->
+    <include file="$(find test13_gazebo)/launch/test13_gazebo_empty_world.launch.launch" />
 
     <!-- JointStateController控制器挂载，tf广播 -->
     <include file="$(find test13_gazebo)/launch/test13_gazebo_states.launch" />   

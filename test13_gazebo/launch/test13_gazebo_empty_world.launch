@@ -1,0 +1,58 @@
+<launch>
+
+  <!-- gazebo初始化 -->
+  
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+
+
+  <!-- 加载机器人模型，初始化机器人位姿 -->
+
+
+  <param name="robot_description" command="$(find xacro)/xacro '$(find test13)/urdf/all.xacro'" /> 
+  <!-- 初始化位姿前等待 -->
+  <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
+  <!-- 底盘位姿 -->
+  <arg name="world_pose" value="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" />
+  <!-- 机械臂状态 -->
+  <arg name="initial_joint_positions" doc="Initial joint configuration of the robot" 
+       default=" -J a1_c1 0 
+                 -J a2_c2 0 
+                 -J a3_c3 0 
+                 -J a4_c4 0 
+                 -J a5_c5 0 
+                 -J a6_c6 0 
+                 -J a7_c7 0 
+                 -J a8_c8 0 
+                 -J c1_box 0 
+                 -J c2_a1 0 
+                 -J c3_a2 0 
+                 -J c4_a3 0 
+                 -J c5_a4 0 
+                 -J c6_a5 0 
+                 -J c7_a6 0 
+                 -J c8_a7 0"/>
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	      args="-urdf 
+              -model test13 
+              -param robot_description
+              $(arg unpause) 
+              $(arg world_pose) 
+              $(arg initial_joint_positions)
+              "/> 
+
+
+</launch>
