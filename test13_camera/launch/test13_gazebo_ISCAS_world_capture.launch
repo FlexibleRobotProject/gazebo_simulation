@@ -32,8 +32,8 @@
 
   <!-- 机械臂状态 -->
   <arg name="initial_joint_positions" doc="Initial joint configuration of the robot" 
-       default=" -J a1_c1 0.5 
-                 -J a2_c2 0.5
+       default=" -J a1_c1 0
+                 -J a2_c2 0
                  -J a3_c3 0 
                  -J a4_c4 0 
                  -J a5_c5 0 
