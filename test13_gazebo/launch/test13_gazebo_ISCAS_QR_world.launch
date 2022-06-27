@@ -10,7 +10,7 @@
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
 
-    <arg name="world_name" value="$(find test13_gazebo)/world/ISCAS.world"/>
+    <arg name="world_name" value="$(find test13_gazebo)/world/ISCAS_QR0.world"/>
 
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
@@ -28,7 +28,7 @@
   <!-- 初始化位姿前等待 -->
   <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
   <!-- 底盘位姿 -->
-  <arg name="world_pose" value="-x 0 -y 0 -z 0 -R 0 -P 0 -Y 0" />
+  <arg name="world_pose" value="-x 7.5 -y 1 -z 0 -R 0 -P 0 -Y -1.57" />
   <!-- 机械臂状态 -->
   <arg name="initial_joint_positions" doc="Initial joint configuration of the robot" 
        default=" -J a1_c1 0 
