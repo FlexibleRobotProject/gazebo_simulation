@@ -1,0 +1,26 @@
+<annotation>
+	<folder>JPEGImages</folder>
+	<filename>33.jpg</filename>
+	<path>/home/xz/car/src/darknet_ros/darknet/VOCdevkit/VOC2019/JPEGImages/33.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>800</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>handle</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>192</xmin>
+			<ymin>181</ymin>
+			<xmax>307</xmax>
+			<ymax>336</ymax>
+		</bndbox>
+	</object>
+</annotation>
