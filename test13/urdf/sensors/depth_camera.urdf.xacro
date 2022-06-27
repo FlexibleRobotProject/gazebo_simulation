@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<robot name="depth_camera"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- depth_camera_joint -->
+    <joint name="depth_camera_joint" type="fixed">
+        <origin xyz="0 0.3 0.1" rpy="0  0 1.57"/>
+        <parent link="car"/>
+        <child link="depth_camera_link"/>
+    </joint>
+
+    <!-- depth_camera_link -->
+    <link name="depth_camera_link">
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+
+            <geometry>
+                <!--mesh filename="package://test13/meshes/sensors/camera.STL" /-->
+                <cylinder length="0.01" radius="0.01"/>
+            </geometry>
+
+            <material name="temp_camera_color">
+                <color rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+            </material>
+
+        </visual>
+
+    </link>
+
+    <xacro:include filename="$(find test13)/urdf/sensors/depth_camera.gazebo.xacro"/>
+
+</robot>

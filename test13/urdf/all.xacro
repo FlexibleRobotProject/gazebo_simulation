@@ -6,7 +6,7 @@
     <xacro:include filename="$(find test13)/urdf/wheel.xacro" />
     <xacro:include filename="$(find test13)/urdf/arm.xacro" />
     <xacro:include filename="$(find test13)/urdf/sensors/camera.urdf.xacro"/>
-    
+    <xacro:include filename="$(find test13)/urdf/sensors/depth_camera.urdf.xacro"/>    
     <!--xacro:include filename="$(find test13)/urdf/env.xacro" /-->
 
 
