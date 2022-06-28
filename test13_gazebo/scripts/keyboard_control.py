@@ -1,74 +1,93 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 import rospy
+import sys
+import select
+import tty
+import termios
+from std_msgs.msg import String
+
 from gazebo_msgs.msg import ModelState
 from gazebo_msgs.msg import ModelStates
 
-import sys
-import select
-import termios
-import tty
+from tf.transformations import quaternion_from_euler
 
-pub_flag = 0
+import math
 
+if __name__ == '__main__':
+    rospy.init_node('keyboard')
 
-def getKey():
-    tty.setraw(sys.stdin.fileno())
+    pub = rospy.Publisher('gazebo/set_model_state', ModelState, queue_size=1)
+    rate = rospy.Rate(100)
 
-    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
-
-    if rlist:
-        key = sys.stdin.read(1)  # 读取终端上的交互输入
-    else:
-        key = 'a'
-
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-
-    return key
-
-
-
-def callback1(ModelStates):
-
-    global pub_flag
-
-
+    old_attr = termios.tcgetattr(sys.stdin)
+    tty.setcbreak(sys.stdin.fileno())
+    print('Please input keys, press Ctrl + C to quit')
 
     pose_msg = ModelState()
     pose_msg.model_name = 'test13'
+    pose_msg.pose.position.x = 0
+    pose_msg.pose.position.y = 0
+    pose_msg.pose.position.z = 0
+    pose_msg.pose.orientation.x = 0
+    pose_msg.pose.orientation.y = 0
+    pose_msg.pose.orientation.z = 0
+    pose_msg.pose.orientation.w = 1
 
-    for i in range(len(ModelStates.name)):
-        if ModelStates.name[i] == "test13":
-            pose_msg.pose.position.x = ModelStates.pose[i].position.x
-            pose_msg.pose.position.y = ModelStates.pose[i].position.y
-            pose_msg.pose.position.z = ModelStates.pose[i].position.z
-            pose_msg.pose.orientation.x = ModelStates.pose[i].orientation.x
-            pose_msg.pose.orientation.y = ModelStates.pose[i].orientation.y
-            pose_msg.pose.orientation.z = ModelStates.pose[i].orientation.z
-            pose_msg.pose.orientation.w = ModelStates.pose[i].orientation.w
+    pose_r = 0
+    pose_p = 0
+    pose_y = 0
+
+    qnt = quaternion_from_euler(0, 0, 0)
     
-    key = getKey()
-    rospy.loginfo(pose_msg.pose.position.x)
-    #if key == 'w':
-    pose_msg.pose.position.x += 0.2
-    pub_flag = 1
-    
-    if pub_flag == 1:
-        #pub_flag = 0
-        pub.publish(pose_msg)
+    while not rospy.is_shutdown():
+        if select.select([sys.stdin], [], [], 0)[0] == [sys.stdin]:  # 设置超时参数为0，防止阻塞
+            key_input = sys.stdin.read(1)
+
+            if key_input == 'w':
+
+                pose_msg.pose.position.x -= 0.05*math.sin(pose_y)
+                pose_msg.pose.position.y += 0.05*math.cos(pose_y)
+                pub.publish(pose_msg)
 
 
+            if key_input == 's':
+                pose_msg.pose.position.x += 0.05*math.sin(pose_y)
+                pose_msg.pose.position.y -= 0.05*math.cos(pose_y)
+                pub.publish(pose_msg)
+
+            if key_input == 'd':
+
+                pose_y -= 0.05
+
+                if pose_y <= -math.pi:
+                    pose_y += 2*math.pi
+
+                rospy.loginfo(pose_y)
+
+                q = quaternion_from_euler(pose_r, pose_p, pose_y)
+                pose_msg.pose.orientation.x = q[0]
+                pose_msg.pose.orientation.y = q[1]
+                pose_msg.pose.orientation.z = q[2]
+                pose_msg.pose.orientation.w = q[3]                
 
 
+                pub.publish(pose_msg)
 
+            if key_input == 'a':
 
+                pose_y += 0.05
+                if pose_y >= math.pi:
+                    pose_y -= 2*math.pi
 
+                rospy.loginfo(pose_y)
 
-if __name__ == '__main__':
-    rospy.init_node('pose_publisher')
+                q = quaternion_from_euler(pose_r, pose_p, pose_y)
+                pose_msg.pose.orientation.x = q[0]
+                pose_msg.pose.orientation.y = q[1]
+                pose_msg.pose.orientation.z = q[2]
+                pose_msg.pose.orientation.w = q[3]     
 
-    pub = rospy.Publisher('gazebo/set_model_state', ModelState, queue_size=10)
-    rospy.Subscriber('/gazebo/model_states', ModelStates, callback1)
+                pub.publish(pose_msg)
 
-    settings = termios.tcgetattr(sys.stdin)
-
-    rospy.spin()
+        rate.sleep()  # 使用sleep()函数消耗剩余时间
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_attr)
