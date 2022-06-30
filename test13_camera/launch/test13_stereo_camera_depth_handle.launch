@@ -1,7 +1,5 @@
 <launch>
 
-  <include file="$(find test13_camera)/launch/test13_gazebo_ISCAS_world_capture.launch"/>
-
   <include file="$(find darknet_ros)/launch/test13_yolov3_left.launch"/>
 
   <include file="$(find darknet_ros)/launch/test13_yolov3_right.launch"/>

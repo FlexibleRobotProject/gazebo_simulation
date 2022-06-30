@@ -128,14 +128,14 @@ def callback3(left_ros_image,right_ros_image):
     depth =   (flength * base_line)/(disparity)
     x =  ((cxl_f - cx) * base_line)/(disparity)
     y = (( cyl_f - cy) * base_line)/(disparity)
-    #print(x)
-    #print(y)
+    print(x)
+    print(y)
     print(depth)
 
     #随便看看
     cv2.circle(left_cv_image, (int(cxl_f), int(cyl_f)), 5, (0, 0, 255), 0)
     cv2.circle(right_cv_image, (int(cxr_f), int(cyr_f)), 5, (0, 0, 255), 0)
-    cv2.imshow('left',left_cv_image)
+    #cv2.imshow('left',left_cv_image)
     key =cv2.waitKey(30)
 
 
