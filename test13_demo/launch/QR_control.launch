@@ -1,0 +1,19 @@
+<launch>
+  
+    <!-- gazebo环境初始化，模型导入（HW+GAZEBO）,先挂一个empty  -->
+    <include file="$(find test13_gazebo)/launch/test13_gazebo_ISCAS_QR_world.launch" />
+
+    <!-- JointStateController控制器挂载，tf广播 -->
+    <include file="$(find test13_gazebo)/launch/test13_gazebo_states.launch" />   
+
+    <!-- JointTrajectoryController控制器挂载 -->
+    <include file="$(find test13_gazebo)/launch/test13_trajectory_controller.launch" />
+
+    <!-- moveit端启动，和ros_control之间action服务端建立 -->
+    <include file="$(find test13_moveit_config)/launch/moveit_planning_execution.launch" />
+
+    <!--include file="$(find test13_camera)/launch/test13_depth_camera_QR_detection.launch" /-->
+
+    <node name="test13_start_node" pkg="test13_demo" type="moveit_start.py"/>
+
+</launch>
