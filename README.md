@@ -1,5 +1,15 @@
 # gazebo_simulation
 
+:star:6.30更新
+---
+### 修改 test13_moveit_config包
+
+添加新的起始位姿
+
+### 修改 test13_camera，test13_gazebo，test13_demo包
+
+完成功能，代码混乱，后续重构
+
 :star:6.28更新
 ---
 ### 修改 test13_gazebo包
