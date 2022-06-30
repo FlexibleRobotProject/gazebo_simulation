@@ -5,7 +5,6 @@ controller_list:
     type: FollowJointTrajectory
     default: true
     joints:
-    joints:
       - c1_box
       - a1_c1
       - c2_a1

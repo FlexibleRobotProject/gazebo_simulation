@@ -88,6 +88,28 @@
         <joint name="c8_a7" value="-0.1" />
     </group_state>
 
+
+    <group_state name="start_pose" group="arm">
+        <joint name="a1_c1" value="-0.35" />
+        <joint name="a2_c2" value="-0.35" />
+        <joint name="a3_c3" value="-0.35" />
+        <joint name="a4_c4" value="-0.35" />
+        <joint name="a5_c5" value="0.35" />
+        <joint name="a6_c6" value="0.35" />
+        <joint name="a7_c7" value="0.35" />
+
+        <joint name="c1_box" value="0" />
+        <joint name="c2_a1" value="0" />
+        <joint name="c3_a2" value="0" />
+        <joint name="c4_a3" value="0" />
+        <joint name="c5_a4" value="0" />
+        <joint name="c6_a5" value="0" />
+        <joint name="c7_a6" value="0" />
+
+        <joint name="a8_c8" value="0.35" />        
+        <joint name="c8_a7" value="0" />
+    </group_state>
+
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base_footprint" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
