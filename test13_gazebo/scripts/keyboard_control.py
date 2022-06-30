@@ -13,6 +13,8 @@ from tf.transformations import quaternion_from_euler
 
 import math
 
+from geometry_msgs.msg import Point,Pose, PoseStamped, PoseArray, Quaternion
+
 if __name__ == '__main__':
     rospy.init_node('keyboard')
 
@@ -23,19 +25,17 @@ if __name__ == '__main__':
     tty.setcbreak(sys.stdin.fileno())
     print('Please input keys, press Ctrl + C to quit')
 
+    pose_px = 0
+    pose_py = 0
+    pose_pz = 0
+    pose_or = 0
+    pose_op = 0
+    pose_oy = 0
+
     pose_msg = ModelState()
     pose_msg.model_name = 'test13'
-    pose_msg.pose.position.x = 0
-    pose_msg.pose.position.y = 0
-    pose_msg.pose.position.z = 0
-    pose_msg.pose.orientation.x = 0
-    pose_msg.pose.orientation.y = 0
-    pose_msg.pose.orientation.z = 0
-    pose_msg.pose.orientation.w = 1
-
-    pose_r = 0
-    pose_p = 0
-    pose_y = 0
+    pose_msg.pose.position = Point(pose_px,pose_py,pose_pz)
+    pose_msg.pose.orientation = Quaternion(*quaternion_from_euler(pose_or, pose_op, pose_oy))
 
     qnt = quaternion_from_euler(0, 0, 0)
     
@@ -45,47 +45,38 @@ if __name__ == '__main__':
 
             if key_input == 'w':
 
-                pose_msg.pose.position.x -= 0.05*math.sin(pose_y)
-                pose_msg.pose.position.y += 0.05*math.cos(pose_y)
+                pose_msg.pose.position.x -= 0.05*math.sin(pose_oy)
+                pose_msg.pose.position.y += 0.05*math.cos(pose_oy)
                 pub.publish(pose_msg)
 
 
             if key_input == 's':
-                pose_msg.pose.position.x += 0.05*math.sin(pose_y)
-                pose_msg.pose.position.y -= 0.05*math.cos(pose_y)
+                pose_msg.pose.position.x += 0.05*math.sin(pose_oy)
+                pose_msg.pose.position.y -= 0.05*math.cos(pose_oy)
                 pub.publish(pose_msg)
 
             if key_input == 'd':
 
-                pose_y -= 0.05
+                pose_oy -= 0.05
 
-                if pose_y <= -math.pi:
-                    pose_y += 2*math.pi
+                if pose_oy <= -math.pi:
+                    pose_oy += 2*math.pi
 
-                rospy.loginfo(pose_y)
-
-                q = quaternion_from_euler(pose_r, pose_p, pose_y)
-                pose_msg.pose.orientation.x = q[0]
-                pose_msg.pose.orientation.y = q[1]
-                pose_msg.pose.orientation.z = q[2]
-                pose_msg.pose.orientation.w = q[3]                
-
+                rospy.loginfo(pose_oy)
+            
+                pose_msg.pose.orientation = Quaternion(*quaternion_from_euler(pose_or, pose_op, pose_oy))
 
                 pub.publish(pose_msg)
 
             if key_input == 'a':
 
-                pose_y += 0.05
-                if pose_y >= math.pi:
-                    pose_y -= 2*math.pi
+                pose_oy += 0.05
+                if pose_oy >= math.pi:
+                    pose_oy -= 2*math.pi
 
-                rospy.loginfo(pose_y)
+                rospy.loginfo(pose_oy)
 
-                q = quaternion_from_euler(pose_r, pose_p, pose_y)
-                pose_msg.pose.orientation.x = q[0]
-                pose_msg.pose.orientation.y = q[1]
-                pose_msg.pose.orientation.z = q[2]
-                pose_msg.pose.orientation.w = q[3]     
+                pose_msg.pose.orientation = Quaternion(*quaternion_from_euler(pose_or, pose_op, pose_oy))   
 
                 pub.publish(pose_msg)
 

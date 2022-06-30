@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   xacro
   gazebo_msgs
   tf
+  tf2_ros
 )
 
 ## System dependencies are found with CMake's conventions
